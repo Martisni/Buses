@@ -37,6 +37,4 @@ public class Bus {
     @JoinColumn(name = "line_id")
     private BusLine line;
 
-    private List<BusStop> stops;
-
 }

@@ -1,8 +1,13 @@
 package com.sanvalero.buses.service;
 
 import com.sanvalero.buses.domain.Bus;
+import com.sanvalero.buses.domain.BusLine;
+import com.sanvalero.buses.domain.dto.BusDTO;
+import com.sanvalero.buses.exception.BusLineNotFoundException;
 import com.sanvalero.buses.exception.BusNotFoundException;
+import com.sanvalero.buses.repository.BusLineRepository;
 import com.sanvalero.buses.repository.BusRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +18,12 @@ public class BusServiceImpl implements BusService {
 
     @Autowired
     private BusRepository busRepository;
+
+    @Autowired
+    private BusLineRepository busLineRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<Bus> findAll() {
@@ -31,8 +42,14 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Bus addBus(Bus bus) {
-        return busRepository.save(bus);
+    public Bus addBus(BusDTO busDTO) throws BusLineNotFoundException {
+        Bus newBus = new Bus();
+        modelMapper.map(busDTO,newBus);
+
+        BusLine busLine = busLineRepository.findById(busDTO.getLineId())
+                        .orElseThrow(BusLineNotFoundException::new);
+        newBus.setLine(busLine);
+        return busRepository.save(newBus);
     }
 
     @Override

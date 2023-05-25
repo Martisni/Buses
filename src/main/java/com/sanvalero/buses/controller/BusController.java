@@ -1,6 +1,8 @@
 package com.sanvalero.buses.controller;
 
 import com.sanvalero.buses.domain.Bus;
+import com.sanvalero.buses.domain.dto.BusDTO;
+import com.sanvalero.buses.exception.BusLineNotFoundException;
 import com.sanvalero.buses.exception.BusNotFoundException;
 import com.sanvalero.buses.exception.ErrorMessage;
 import com.sanvalero.buses.service.BusService;
@@ -41,8 +43,8 @@ public class BusController {
     }
 
     @PostMapping("/buses")
-    public ResponseEntity<Bus> addBus(@Valid @RequestBody Bus bus) {
-        Bus newBus = busService.addBus(bus);
+    public ResponseEntity<Bus> addBus(@RequestBody BusDTO busDTO) throws BusLineNotFoundException {
+        Bus newBus = busService.addBus(busDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newBus);
     }
 
@@ -61,6 +63,12 @@ public class BusController {
     @ExceptionHandler(BusNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleBusNotFoundException(BusNotFoundException bnfe) {
         ErrorMessage errorMessage = new ErrorMessage(404, bnfe.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BusLineNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleBusLineNotFoundException(BusLineNotFoundException blnfe) {
+        ErrorMessage errorMessage = new ErrorMessage(404, blnfe.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 

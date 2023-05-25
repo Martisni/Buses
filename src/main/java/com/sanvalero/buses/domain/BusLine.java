@@ -1,5 +1,6 @@
 package com.sanvalero.buses.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,12 @@ public class BusLine {
     private int rate;
 
     @OneToMany(mappedBy = "line")
+    @JsonBackReference(value = "busline_buses")
     private List<Bus> buses;
+
+    @ManyToMany
+    @JoinTable(name = "lines_stops",
+            joinColumns = @JoinColumn(name = "line_id"),
+            inverseJoinColumns = @JoinColumn(name = "stop_id"))
     private List<BusStop> stops;
 }

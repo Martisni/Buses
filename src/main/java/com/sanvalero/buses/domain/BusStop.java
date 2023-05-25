@@ -23,5 +23,6 @@ public class BusStop {
     @Column
     private double longitude;
 
+    @ManyToMany(mappedBy = "stops")
     private List<BusLine> lines;
 }
