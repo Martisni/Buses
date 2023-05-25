@@ -10,6 +10,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Data
@@ -31,5 +32,11 @@ public class Bus {
     @Column
     @NotNull
     private boolean hasWifi;
+
+    @ManyToOne
+    @JoinColumn(name = "line_id")
+    private BusLine line;
+
+    private List<BusStop> stops;
 
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +25,8 @@ public class BusLine {
     private LocalTime endTime;
     @Column
     private int rate;
+
+    @OneToMany(mappedBy = "line")
+    private List<Bus> buses;
+    private List<BusStop> stops;
 }
