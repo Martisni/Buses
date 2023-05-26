@@ -1,21 +1,18 @@
 package com.sanvalero.buses.controller;
 
 import com.sanvalero.buses.domain.Bus;
-import com.sanvalero.buses.domain.dto.BusDTO;
+import com.sanvalero.buses.domain.dto.BusInDTO;
 import com.sanvalero.buses.exception.BusLineNotFoundException;
 import com.sanvalero.buses.exception.BusNotFoundException;
 import com.sanvalero.buses.exception.ErrorMessage;
 import com.sanvalero.buses.service.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class BusController {
     }
 
     @PostMapping("/buses")
-    public ResponseEntity<Bus> addBus(@RequestBody BusDTO busDTO) throws BusLineNotFoundException {
+    public ResponseEntity<Bus> addBus(@RequestBody BusInDTO busDTO) throws BusLineNotFoundException {
         Bus newBus = busService.addBus(busDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newBus);
     }

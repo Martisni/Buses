@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BusDTO {
+public class BusInDTO {
 
     private String code;
     private int capacity;
     private boolean hasWifi;
-    private long lineId;
+    private long line;
 
 }

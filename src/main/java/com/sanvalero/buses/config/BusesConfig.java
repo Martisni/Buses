@@ -1,4 +1,4 @@
-package com.sanvalero.buses;
+package com.sanvalero.buses.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

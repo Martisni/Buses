@@ -2,7 +2,7 @@ package com.sanvalero.buses.service;
 
 import com.sanvalero.buses.domain.Bus;
 import com.sanvalero.buses.domain.BusLine;
-import com.sanvalero.buses.domain.dto.BusDTO;
+import com.sanvalero.buses.domain.dto.BusInDTO;
 import com.sanvalero.buses.exception.BusLineNotFoundException;
 import com.sanvalero.buses.exception.BusNotFoundException;
 import com.sanvalero.buses.repository.BusLineRepository;
@@ -42,13 +42,14 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Bus addBus(BusDTO busDTO) throws BusLineNotFoundException {
+    public Bus addBus(BusInDTO busDTO) throws BusLineNotFoundException {
         Bus newBus = new Bus();
         modelMapper.map(busDTO,newBus);
 
-        BusLine busLine = busLineRepository.findById(busDTO.getLineId())
+        BusLine busLine = busLineRepository.findById(busDTO.getLine())
                         .orElseThrow(BusLineNotFoundException::new);
-        newBus.setLine(busLine);
+        newBus.setBusLine(busLine);
+
         return busRepository.save(newBus);
     }
 

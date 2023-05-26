@@ -1,6 +1,7 @@
 package com.sanvalero.buses.repository;
 
 import com.sanvalero.buses.domain.Bus;
+import com.sanvalero.buses.domain.BusLine;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,6 @@ public interface BusRepository extends CrudRepository<Bus, Long> {
     //Query Methods
     List<Bus> findAll();
     List<Bus> findByHasWifi(boolean hasWifi);
+    List<Bus> findByBusLine(BusLine busLine);
     Bus findByCode(String code);
 }
